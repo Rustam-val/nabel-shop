@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1200" viewBox="0 0 900 1200">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F8F1E4"/>
+      <stop offset="1" stop-color="#EAD9B4"/>
+    </linearGradient>
+    <radialGradient id="r" cx="0.75" cy="0.2" r="0.7">
+      <stop offset="0" stop-color="#A97C43" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#A97C43" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="900" height="1200" fill="url(#g)"/>
+  <rect width="900" height="1200" fill="url(#r)"/>
+  <g transform="translate(350.0,500.0) scale(4.090909090909091)" opacity="0.75"><path d="M50 130 h100 a6 6 0 0 0 6-7 l-4-18 h-104 l-4 18 a6 6 0 0 0 6 7 z" fill="none" stroke="#A97C43" stroke-width="3"/><path d="M60 105 v-14 a40 34 0 0 1 80 0 v14" fill="none" stroke="#A97C43" stroke-width="3"/><circle cx="100" cy="70" r="6" fill="#A97C43"/></g>
+  <text x="50%" y="93%" text-anchor="middle" font-family="Georgia, serif" font-size="28" fill="#A97C43" letter-spacing="2" opacity="0.8">БАХУРНИЦЫ</text>
+</svg>
