@@ -829,10 +829,19 @@ function getDefaultVariant(product) {
   return product.variants.find((v) => v.default) || product.variants[0];
 }
 
-/* Цена, которую показываем на карточке товара (цена варианта по умолчанию, либо обычная цена) */
+/* Все назначенные цены товара: цены всех вариантов объёма/веса, либо обычная цена.
+   Товары без цены (price: null, "уточняется") дают пустой список. */
+function getPriceOptions(product) {
+  const prices = product.variants && product.variants.length > 0
+    ? product.variants.map((v) => v.price)
+    : [product.price];
+  return prices.filter((price) => price != null);
+}
+
+/* Самая низкая цена товара (для надписи "от ..." и сортировки), либо null, если цена не назначена */
 function getDisplayPrice(product) {
-  const v = getDefaultVariant(product);
-  return v ? v.price : product.price;
+  const prices = getPriceOptions(product);
+  return prices.length > 0 ? Math.min(...prices) : null;
 }
 
 /* Цена для сортировки — товары без цены (price: null, "уточняется") всегда уходят в конец списка,
@@ -848,4 +857,9 @@ function formatPriceLabel(product) {
   const displayPrice = getDisplayPrice(product);
   if (displayPrice == null) return "Цена уточняется";
   return product.variants ? `от ${formatPrice(displayPrice)}` : formatPrice(displayPrice);
+}
+
+/* Количество товара — только целое число от 1 и больше (защита от "-3", "2.5", пустого поля) */
+function normalizeQty(value) {
+  return Math.max(1, Math.floor(Number(value)) || 1);
 }

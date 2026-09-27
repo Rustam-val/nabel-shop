@@ -77,7 +77,7 @@
         <div class="pd-actions">
           <div class="qty-selector">
             <button type="button" onclick="changeQty(-1)" aria-label="Меньше">−</button>
-            <input type="number" id="pdQtyInput" value="1" min="1">
+            <input type="number" id="pdQtyInput" value="1" min="1" step="1" inputmode="numeric">
             <button type="button" onclick="changeQty(1)" aria-label="Больше">+</button>
           </div>
           <button class="btn btn-primary" id="pdAddToCart" style="flex:1;">Добавить в корзину</button>

@@ -74,13 +74,16 @@ function applyCatalogFilters() {
   if (activeFilters.categories.size > 0) {
     list = list.filter((p) => activeFilters.categories.has(p.category));
   }
+  // Товар подходит под диапазон цены, если в него попадает хотя бы один его вариант объёма/веса.
   // Товары без назначенной цены (price: null, "Цена уточняется") не должны выпадать
   // из выдачи при фильтре по диапазону цены — всегда оставляем их в списке.
-  if (activeFilters.minPrice != null) {
-    list = list.filter((p) => getDisplayPrice(p) == null || getDisplayPrice(p) >= activeFilters.minPrice);
-  }
-  if (activeFilters.maxPrice != null) {
-    list = list.filter((p) => getDisplayPrice(p) == null || getDisplayPrice(p) <= activeFilters.maxPrice);
+  if (activeFilters.minPrice != null || activeFilters.maxPrice != null) {
+    const min = activeFilters.minPrice ?? -Infinity;
+    const max = activeFilters.maxPrice ?? Infinity;
+    list = list.filter((p) => {
+      const prices = getPriceOptions(p);
+      return prices.length === 0 || prices.some((price) => price >= min && price <= max);
+    });
   }
 
   switch (activeFilters.sort) {
