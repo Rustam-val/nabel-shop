@@ -75,7 +75,9 @@ function initProductPage() {
   addBtn.disabled = !product.inStock;
   addBtn.textContent = product.inStock ? "Добавить в корзину" : "Нет в наличии";
   addBtn.onclick = () => {
-    const qty = Number(document.getElementById("pdQtyInput").value) || 1;
+    const qtyInput = document.getElementById("pdQtyInput");
+    const qty = normalizeQty(qtyInput.value);
+    qtyInput.value = qty;
     addToCart(product.id, qty, selectedVariant ? selectedVariant.label : null);
   };
 
@@ -124,8 +126,7 @@ function setMainImage(src, btn) {
 
 function changeQty(delta) {
   const input = document.getElementById("pdQtyInput");
-  const val = Math.max(1, (Number(input.value) || 1) + delta);
-  input.value = val;
+  input.value = normalizeQty(normalizeQty(input.value) + delta);
 }
 
 function renderSimilarProducts(product) {

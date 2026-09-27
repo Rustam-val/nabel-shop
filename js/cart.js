@@ -12,7 +12,9 @@ const CART_KEY = "nabel_cart_v1";
 
 function getCart() {
   try {
-    return JSON.parse(localStorage.getItem(CART_KEY)) || [];
+    const cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
+    // Чиним количество в корзинах, сохранённых до исправления ("-3", "2.5")
+    return cart.map((item) => ({ ...item, qty: normalizeQty(item.qty) }));
   } catch (e) {
     return [];
   }
@@ -42,6 +44,7 @@ function cartItemUnitPrice(item) {
 function addToCart(productId, qty = 1, variantLabel = null) {
   const product = PRODUCTS.find((p) => p.id === productId);
   if (!product || !product.inStock) return;
+  qty = normalizeQty(qty);
 
   // Если у товара есть варианты, а конкретный не передан — берём вариант по умолчанию
   let resolvedVariant = variantLabel;
@@ -76,7 +79,7 @@ function updateCartQty(productId, variantLabel, qty) {
   const cart = getCart();
   const item = findCartItem(cart, productId, variantLabel);
   if (!item) return;
-  item.qty = Math.max(1, qty);
+  item.qty = normalizeQty(qty);
   saveCart(cart);
   renderCartDrawer();
   renderCartPage();
